@@ -26,7 +26,7 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $app->before([$this, 'setProfilerTransaction']);
+        $app->before([$this, 'setProfilerTransaction'], Application::EARLY_EVENT);
     }
 
     /**
