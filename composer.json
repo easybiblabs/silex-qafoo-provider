@@ -1,0 +1,17 @@
+{
+    "name": "easybib/silex-qafoo-provider",
+    "description": "Silex provider for the qafoo profiler",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Stephan Vock",
+            "email": "stephan@lagged.biz"
+        }
+    ],
+    "require": {
+        "qafoolabs/profiler": "@stable"
+    },
+    "autoload": {
+        "psr-4": {"Easybib\\Silex\\": "src/"}
+    }
+}
