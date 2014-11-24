@@ -12,6 +12,6 @@
         "qafoolabs/profiler": "@stable"
     },
     "autoload": {
-        "psr-4": {"Easybib\\Silex\\": "src/"}
+        "psr-4": {"EasyBib\\Silex\\": "src/"}
     }
 }

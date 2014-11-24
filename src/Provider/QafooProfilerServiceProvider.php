@@ -1,6 +1,6 @@
 <?php
 
-namespace Easybib\Silex\Provider;
+namespace EasyBib\Silex\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
