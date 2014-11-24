@@ -14,7 +14,7 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        if ($app['qafoo.profiler.development']) {
+        if (isset($app['qafoo.profiler.development']) && $app['qafoo.profiler.development']) {
             Profiler::startDevelopment($app['qafoo.profiler.key']);
         } else {
             Profiler::start($app['qafoo.profiler.key']);
