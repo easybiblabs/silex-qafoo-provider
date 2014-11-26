@@ -26,7 +26,12 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
      */
     public function boot(Application $app)
     {
-        $app->before([$this, 'setProfilerTransaction'], Application::EARLY_EVENT);
+        // Priority 8, because
+        // - Symfony Router is at 32, we need to be after that, to get the route name
+        // - Symfony Firewall is at 8, so if you register this before the firewall
+        //   it will log firewall-rejected requests; if you register it later, it won't
+        // (see http://symfony.com/doc/current/reference/dic_tags.html#kernel-request)
+        $app->before([$this, 'setProfilerTransaction'], 8);
     }
 
     /**
