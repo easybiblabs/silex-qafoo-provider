@@ -2,7 +2,7 @@
 
 #### Setup
 
-```
+```php
 $app['qafoo.profiler.key'] = '{enter here your qafoo key}';
 $app['qafoo.profiler.sample_rate'] = 20; // value equals %
 
