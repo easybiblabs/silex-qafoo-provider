@@ -18,7 +18,8 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
             Profiler::startDevelopment($app['qafoo.profiler.key']);
             Profiler::setBackend(new Profiler\CurlBackend());
         } else {
-            Profiler::start($app['qafoo.profiler.key']);
+            $sampleRate = isset($app['qafoo.profiler.sample_rate']) ? $app['qafoo.profiler.sample_rate'] : null;
+            Profiler::start($app['qafoo.profiler.key'], $sampleRate);
         }
     }
 
