@@ -16,9 +16,9 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
     {
         if (isset($app['qafoo.profiler.development']) && $app['qafoo.profiler.development']) {
 
-            $certificationFile = $app['qafoo.profiler.certification_file'] ? $app['qafoo.profiler.certification_file'] : null;
-            $connectionTimeout = $app['qafoo.profiler.connection_timeout'] ? $app['qafoo.profiler.connection_timeout'] : 1;
-            $timeout = $app['qafoo.profiler.timeout'] ? $app['qafoo.profiler.timeout'] : 1;
+            $certificationFile = isset($app['qafoo.profiler.certification_file']) ? $app['qafoo.profiler.certification_file'] : null;
+            $connectionTimeout = isset($app['qafoo.profiler.connection_timeout']) ? $app['qafoo.profiler.connection_timeout'] : 1;
+            $timeout = isset($app['qafoo.profiler.timeout']) ? $app['qafoo.profiler.timeout'] : 1;
 
             Profiler::startDevelopment($app['qafoo.profiler.key']);
             Profiler::setBackend(
