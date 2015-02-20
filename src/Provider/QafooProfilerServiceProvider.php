@@ -45,6 +45,30 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
         //   it will log firewall-rejected requests; if you register it later, it won't
         // (see http://symfony.com/doc/current/reference/dic_tags.html#kernel-request)
         $app->before([$this, 'setProfilerTransaction'], 8);
+
+        if ($app->offsetExists('security')) {
+            $app->after(function() use ($app) {
+                $this->setTransactionUserId($app);
+            });
+        }
+    }
+
+    /**
+     * @param Application $app
+     */
+    public function setTransactionUserId(Application $app)
+    {
+        $token = $app['security']->getToken();
+        if (null === $token) {
+            return;
+        }
+
+        $user = $token->getUser();
+        if (null === $user || !method_exists($user, 'getId')) {
+            return;
+        }
+
+        Profiler::setCustomVariable('userId', $user->getId());
     }
 
     /**
