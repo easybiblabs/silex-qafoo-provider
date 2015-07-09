@@ -1,6 +1,9 @@
 {
     "name": "easybib/silex-qafoo-provider",
     "description": "Silex provider for the qafoo profiler",
+    "keywords": [
+        "profiler", "logging", "performance", "qafoo", "tideways"
+    ],
     "license": "BSD-2-Clause",
     "authors": [
         {
@@ -9,7 +12,8 @@
         }
     ],
     "require": {
-        "qafoolabs/profiler": "@stable"
+        "ext-tideways": "*",
+        "php": ">=5.5.0"
     },
     "autoload": {
         "psr-4": {"EasyBib\\Silex\\": "src/"}
