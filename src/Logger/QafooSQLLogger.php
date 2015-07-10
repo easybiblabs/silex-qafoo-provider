@@ -7,7 +7,6 @@
 namespace EasyBib\Silex\Logger;
 
 use Doctrine\DBAL\Logging\SQLLogger;
-use QafooLabs\Profiler;
 
 /**
  * Purpose   A sql logger and timer for the qafoo profiler.
@@ -20,6 +19,9 @@ use QafooLabs\Profiler;
 class QafooSQLLogger implements SQLLogger
 {
     private $id;
+
+    private $span;
+
     /**
      * @param string $sql
      * @param array  $params
@@ -29,10 +31,28 @@ class QafooSQLLogger implements SQLLogger
      */
     public function startQuery($sql, array $params = null, array $types = null)
     {
-        $this->id = Profiler::startCustomTimer('sql', $sql);
+        if (extension_loaded('tideways') && class_exists('Tideways\Profiler')) {
+            $this->span = \Tideways\Profiler::createSpan('sql');
+            $this->span->startTimer();
+            $this->span->annotate(['title' => $sql]);
+
+            return;
+        }
+
+        if (class_exists('QafooLabs\Profiler') and method_exists('QafooLabs\Profiler', 'startCustomTimer')) {
+            $this->id = \QafooLabs\Profiler::startCustomTimer('sql', $sql);
+        }
     }
     public function stopQuery()
     {
-        Profiler::stopCustomTimer($this->id);
+        if (null !== $this->span) {
+            $this->span->stopTimer();
+
+            return;
+        }
+
+        if (null !== $this->id) {
+            \QafooLabs\Profiler::stopCustomTimer($this->id);
+        }
     }
 }

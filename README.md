@@ -1,9 +1,15 @@
 ## silex-qafoo-provider
 
+Aka, the silex-**tideways**-provider!
+
+## Tideways? Qafoo?
+
+Check out https://www.tideways.io.
+
 ## Setup
 
 ```php
-$app['qafoo.profiler.key'] = '{enter here your qafoo key}';
+$app['qafoo.profiler.key'] = '{enter here your qafoo/tideways key}';
 $app['qafoo.profiler.sample_rate'] = 20; // value equals %
 
 // If you are in develop mode, this will ignore the sample rate and use 100%
