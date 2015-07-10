@@ -31,7 +31,7 @@ class QafooSQLLogger implements SQLLogger
      */
     public function startQuery($sql, array $params = null, array $types = null)
     {
-        if (extension_loaded('tideways') && class_exists('\Tideways')) {
+        if (extension_loaded('tideways') && class_exists('\Tideways\Profiler')) {
             $this->span = \Tideways\Profiler::createSpan('sql');
             $this->span->startTimer();
             $this->span->annotate(['title' => $sql]);
@@ -45,13 +45,13 @@ class QafooSQLLogger implements SQLLogger
     }
     public function stopQuery()
     {
-        if (extension_loaded('tideways')) {
+        if (null !== $this->span) {
             $this->span->stopTimer();
 
             return;
         }
 
-        if (class_exists('\QafooLabs') and method_exists('\QafooLabs', 'startCustomTimer')) {
+        if (null !== $this->id) {
             \QafooLabs\Profiler::stopCustomTimer($this->id);
         }
     }
