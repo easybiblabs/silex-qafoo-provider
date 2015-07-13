@@ -12,13 +12,13 @@
         }
     ],
     "require": {
-        "ext-tideways": "*",
         "php": ">=5.5.0"
     },
     "autoload": {
         "psr-4": {"EasyBib\\Silex\\": "src/"}
     },
     "suggest": {
-        "doctrine/dbal": "If you'd like to use the fancy logger to profile queries."
+        "doctrine/dbal": "If you'd like to use the fancy logger to profile queries.",
+        "ext-tideways": "You should install ext/tideways: https://github.com/tideways/php-profiler-extension"
     }
 }
