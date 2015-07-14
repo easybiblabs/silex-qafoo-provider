@@ -5,7 +5,7 @@ namespace EasyBib\Silex\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
-use QafooLabs\Profiler;
+use Tideways\Profiler;
 
 class QafooProfilerServiceProvider implements ServiceProviderInterface
 {
@@ -14,24 +14,8 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
-        if (isset($app['qafoo.profiler.development']) && $app['qafoo.profiler.development']) {
-
-            $certificationFile = isset($app['qafoo.profiler.certification_file']) ? $app['qafoo.profiler.certification_file'] : null;
-            $connectionTimeout = isset($app['qafoo.profiler.connection_timeout']) ? $app['qafoo.profiler.connection_timeout'] : 1;
-            $timeout = isset($app['qafoo.profiler.timeout']) ? $app['qafoo.profiler.timeout'] : 1;
-
-            Profiler::startDevelopment($app['qafoo.profiler.key']);
-            Profiler::setBackend(
-                new Profiler\CurlBackend(
-                    $certificationFile,
-                    $connectionTimeout,
-                    $timeout
-                )
-            );
-        } else {
-            $sampleRate = isset($app['qafoo.profiler.sample_rate']) ? $app['qafoo.profiler.sample_rate'] : null;
-            Profiler::start($app['qafoo.profiler.key'], $sampleRate);
-        }
+        $sampleRate = isset($app['qafoo.profiler.sample_rate']) ? $app['qafoo.profiler.sample_rate'] : null;
+        Profiler::start($app['qafoo.profiler.key'], $sampleRate);
     }
 
     /**
