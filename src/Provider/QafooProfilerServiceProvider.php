@@ -5,7 +5,6 @@ namespace EasyBib\Silex\Provider;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Tideways\Profiler;
 
 class QafooProfilerServiceProvider implements ServiceProviderInterface
 {
@@ -14,8 +13,12 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
      */
     public function register(Application $app)
     {
+        if (!class_exists('Tideways\Profiler')) {
+            return;
+        }
+
         $sampleRate = isset($app['qafoo.profiler.sample_rate']) ? $app['qafoo.profiler.sample_rate'] : null;
-        Profiler::start($app['qafoo.profiler.key'], $sampleRate);
+        \Tideways\Profiler::start($app['qafoo.profiler.key'], $sampleRate);
     }
 
     /**
@@ -42,6 +45,10 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
      */
     public function setTransactionUserId(Application $app)
     {
+        if (!class_exists('Tideways\Profiler')){
+            return;
+        }
+
         $token = $app['security']->getToken();
         if (null === $token) {
             return;
@@ -52,7 +59,7 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
             return;
         }
 
-        Profiler::setCustomVariable('userId', $user->getId());
+        \Tideways\Profiler::setCustomVariable('userId', $user->getId());
     }
 
     /**
@@ -60,12 +67,16 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
      */
     public function setProfilerTransaction(Request $request)
     {
+        if (!class_exists('Tideways\Profiler')) {
+            return;
+        }
+
         $actionName = $request->get('_route');
         if (strpos($actionName, '__') === 0) {
             $actionName = $request->get('_controller');
         }
 
-        Profiler::setTransactionName(
+        \Tideways\Profiler::setTransactionName(
             sprintf(
                 '%s %s',
                 $request->getMethod(),
