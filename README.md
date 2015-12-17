@@ -21,5 +21,6 @@ List of options:
 
  * qafoo.profiler.key (required)
  * qafoo.profiler.sample_rate
+ * qafoo.profiler.route_blacklist
 
 The provider will setup the qafoo profiler as soon as the register method is called.
