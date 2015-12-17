@@ -72,6 +72,13 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
         }
 
         $actionName = $request->get('_route');
+
+        $blacklist = isset($app['qafoo.profiler.route_blacklist']) ? array_flip($app['qafoo.profiler.route_blacklist']) : [];
+        if (isset($blacklist[$actionName])) {
+            \Tideways\Profiler::ignoreTransaction();
+            return;
+        }
+
         if (strpos($actionName, '__') === 0) {
             $actionName = $request->get('_controller');
         }
