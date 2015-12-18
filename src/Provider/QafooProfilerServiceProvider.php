@@ -64,8 +64,9 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Request $request
+     * @param Application $app
      */
-    public function setProfilerTransaction(Request $request)
+    public function setProfilerTransaction(Request $request, Application $app)
     {
         if (!class_exists('Tideways\Profiler')) {
             return;
