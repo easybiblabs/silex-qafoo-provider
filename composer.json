@@ -12,7 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=5.5.0"
+        "php": ">=5.5.0",
+        "silex/silex": "^2.0"
     },
     "autoload": {
         "psr-4": {"EasyBib\\Silex\\": "src/"}
