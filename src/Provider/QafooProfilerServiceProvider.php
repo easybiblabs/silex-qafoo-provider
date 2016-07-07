@@ -2,16 +2,19 @@
 
 namespace EasyBib\Silex\Provider;
 
+use Pimple\Container;
+use Pimple\ServiceProviderInterface;
+use Silex\Api\BootableProviderInterface;
 use Silex\Application;
-use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-class QafooProfilerServiceProvider implements ServiceProviderInterface
+class QafooProfilerServiceProvider implements ServiceProviderInterface, BootableProviderInterface
 {
     /**
-     * @param Application $app
+     * @param Container $app
      */
-    public function register(Application $app)
+    public function register(Container $app)
     {
         if (!class_exists('Tideways\Profiler')) {
             return;
@@ -49,6 +52,7 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface
             return;
         }
 
+        /** @var TokenInterface $token */
         $token = $app['security']->getToken();
         if (null === $token) {
             return;
