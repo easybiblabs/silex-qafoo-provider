@@ -21,7 +21,7 @@ class QafooProfilerServiceProvider implements ServiceProviderInterface, Bootable
         }
 
         // override key if specified, or attempt starting if tideways is not configured to autostart
-        if (isset($app['qafoo.profiler.key']) || \Tideways\Profiler::isStarted()) {
+        if (isset($app['qafoo.profiler.key']) || !ini_get("tideways.auto_start")) {
             $sampleRate = isset($app['qafoo.profiler.sample_rate']) ? $app['qafoo.profiler.sample_rate'] : null;
             \Tideways\Profiler::start($app['qafoo.profiler.key'], $sampleRate);
         }
